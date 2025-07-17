@@ -30,7 +30,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 // Add JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey not configured");
+var secretKey = jwtSettings["SecretKey"] ??
+                Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ??
+                throw new InvalidOperationException("JWT SecretKey not configured. Set via user secrets, environment variable JWT_SECRET_KEY, or appsettings");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
