@@ -54,4 +54,4 @@ TestResult.xml
 nunit-*.xml
 
 # Database
-prepen.db
+prepen.db*
